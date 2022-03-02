@@ -67,7 +67,7 @@ class PipeBackRedirect(torch.autograd.Function):
         ctx.message.tensors = tuple(grad)
         ctx.transport.send_message(ctx.message, sync=False, skip_header=True)
         ctx.event.set()
-        # torch.futures.wait_all(ctx.futures)
+        torch.futures.wait_all(ctx.futures)
         return (None, None, None, None, None, None)
 
 
@@ -207,12 +207,12 @@ class PipeRPCWrapper(nn.Module):
         if isinstance(shapes, torch.Size):
             message.tensor_shapes = [cast(torch.Size, shapes)]
             message.tensor_dtypes = [cast(torch.dtype, dtypes)]
-            message = transport.recv_message_tensors(message)
+            message = transport.recv_message(message.queue_name)
             return message.tensors[0]
         else:
             message.tensor_shapes = cast(List[torch.Size], shapes)
             message.tensor_dtypes = cast(List[torch.dtype], dtypes)
-            message = transport.recv_message_tensors(message)
+            message = transport.recv_message(message.queue_name)
             return message.tensors
 
     @staticmethod
@@ -233,7 +233,7 @@ class PipeRPCWrapper(nn.Module):
         if training:
             grads_message.tensor_shapes = [r.shape for r in result]
             grads_message.tensor_dtypes = [r.dtype for r in result]
-            grads_message = transport.recv_message_tensors(grads_message)
+            grads_message = transport.recv_message(grads_message.queue_name)
 
             with model.lock:
                 torch.autograd.backward(result, grads_message.tensors, retain_graph=True)
