@@ -1,8 +1,9 @@
 ![FairScale Logo](./docs/source/_static/img/fairscale-logo.png)
 
+[![Support Ukraine](https://img.shields.io/badge/Support-Ukraine-FFD500?style=flat&labelColor=005BBB)](https://opensource.facebook.com/support-ukraine)
 ![PyPI](https://img.shields.io/pypi/v/fairscale)
 [![Documentation Status](https://readthedocs.org/projects/fairscale/badge/?version=latest)](https://fairscale.readthedocs.io/en/latest/?badge=latest)
-[![CircleCI](https://circleci.com/gh/facebookresearch/fairscale.svg?style=shield)](https://app.circleci.com/pipelines/github/facebookresearch/fairscale/) ![PyPI - License](https://img.shields.io/pypi/l/fairscale) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/facebookresearch/fairscale/blob/main/CONTRIBUTING.md)
+[![CircleCI](https://circleci.com/gh/facebookresearch/fairscale.svg?style=shield)](https://app.circleci.com/pipelines/github/facebookresearch/fairscale/) ![PyPI - License](https://img.shields.io/pypi/l/fairscale) [![Downloads](https://pepy.tech/badge/fairscale)](https://pepy.tech/project/fairscale) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/facebookresearch/fairscale/blob/main/CONTRIBUTING.md)
 --------------------------------------------------------------------------------
 
 ## Description
@@ -19,6 +20,10 @@ FairScale was designed with the following values in mind:
 * **Modularity** - Users should be able to combine multiple FairScale APIs as part of their training loop seamlessly.
 
 * **Performance** - FairScale APIs provide the best performance in terms of scaling and efficiency.
+
+## Watch Introductory Video
+
+[![Explain Like I’m 5: FairScale](https://img.youtube.com/vi/oDt7ebOwWIc/0.jpg)](https://www.youtube.com/watch?v=oDt7ebOwWIc)
 
 ## What's New:
 
