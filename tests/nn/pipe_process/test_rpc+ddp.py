@@ -98,6 +98,7 @@ def rpc_pipe_and_data_parallel():
     # operate training, other ranks holding rpc service.
     if mpu.get_pipeline_parallel_group().rank() == 0:
         pipe = PipeRPCWrapper(model, balance, worker_map=get_worker_map())
+
         pipe.foreach_worker(register_optimizer, include_self=True)
 
         def step():
@@ -112,17 +113,15 @@ def rpc_pipe_and_data_parallel():
 
             pipe.foreach_worker(step_optimizer, include_self=True)
 
+        pipe.train()
         step()
 
+        pipe.eval()
         inputs = torch.rand(10).cuda()
-        target = torch.rand(10).cuda()
 
         # Sync input for all pipeline module, expect the same output from them.
         dist.broadcast(inputs, src=dp_rank0, group=dp_group)
         output = pipe(inputs)
-
-        nn.MSELoss()(output, target).backward()
-
         tensor_list = [torch.zeros_like(output, dtype=output.dtype) for _ in range(dp_group.size())]
         dist.all_gather(tensor_list, output, group=dp_group)
         for i in range(1, dp_group.size()):
